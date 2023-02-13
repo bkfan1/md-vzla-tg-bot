@@ -26,4 +26,4 @@ def fetch_data():
         return data
 
     except:
-        return False
+        raise Exception('An error occurred while attempting to scrape the data.')
