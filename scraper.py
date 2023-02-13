@@ -1,7 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 
-PAGE_URL = "https://monitordolarvenezuela.com/"
+from config import PAGE_URL
 
 
 def fetch_data():
