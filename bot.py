@@ -11,7 +11,7 @@ from config import TELEGRAM_BOT_TOKEN
 from commands import bot_commands
 from messages import bot_messages
 
-# instanciate telegram tg_bot
+# instance bot
 bot = telebot.TeleBot(token=TELEGRAM_BOT_TOKEN)
 
 # set bot commands
