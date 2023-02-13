@@ -1,12 +1,15 @@
 from threading import Thread
-from commands import bot_commands
-from messages import bot_messages
-from scraper import fetch_data
-import telebot
 
+import telebot
 from telebot.types import InlineKeyboardMarkup
 from telebot.types import InlineKeyboardButton
+from scraper import fetch_data
+
+
 from config import TELEGRAM_BOT_TOKEN
+
+from commands import bot_commands
+from messages import bot_messages
 
 # instanciate telegram tg_bot
 bot = telebot.TeleBot(token=TELEGRAM_BOT_TOKEN)
@@ -14,13 +17,12 @@ bot = telebot.TeleBot(token=TELEGRAM_BOT_TOKEN)
 # set bot commands
 bot.set_my_commands(commands=bot_commands)
 
-
 @bot.message_handler(commands=['start', 'iniciar'])
 def send_welcome_message(message):
     bot.reply_to(message, text=bot_messages['welcome'])
 
 
-@bot.message_handler(commands=['precios'])
+@bot.message_handler(commands=['precios', 'prices'])
 def send_dollar_prices(message):
 
     monitors = fetch_data()
@@ -35,7 +37,7 @@ def send_dollar_prices(message):
     bot.send_message(chat_id=cid, text=txt, parse_mode='html')
 
 
-@bot.message_handler(commands=['precio'])
+@bot.message_handler(commands=['precio', 'price'])
 def show_available_monitors(message):
     markup = InlineKeyboardMarkup(row_width=2)
 
@@ -67,7 +69,7 @@ def show_selected_monitor_data(call):
             bot.send_message(cid, text, parse_mode='html')
 
 
-@bot.message_handler(commands=['help', 'ayuda'])
+@bot.message_handler(commands=['ayuda', 'help'])
 def send_help_text(message):
     bot.reply_to(message, text=bot_messages['help'], parse_mode="html")
 
@@ -83,8 +85,8 @@ def receive_messages():
     bot.infinity_polling()
 
 
-def run_bot():
-    print('Running bot....')
+def run_bot():        
+    print('Starting the bot....')
     bot_thread = Thread(target=receive_messages)
     print('Bot is running.')
     bot_thread.start()
